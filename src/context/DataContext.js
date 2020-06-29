@@ -18,11 +18,10 @@ const DataContextProvider = (props) => {
     },[items])
 
     useEffect(() => {
-        const persistedItems = localStorage.getItem(KEY);
-        if (persistedItems) setItems(JSON.parse(persistedItems));
+        const persistedItems = JSON.parse(localStorage.getItem(KEY));
+        if (persistedItems) setItems(persistedItems);
     }, []);
 
-      
     const addItems = (name,price,qty) => {
         setItems([...items,{name:name,price:price,qty:qty, id:uuid()}])
     }
@@ -38,7 +37,7 @@ const DataContextProvider = (props) => {
 
     const actions = {
         addItems,
-        setItems,
+        removeItems,
     }
 
     return(

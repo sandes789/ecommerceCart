@@ -3,6 +3,8 @@ import {v1 as uuid} from 'uuid'
 
 export const DataContext = createContext();
 
+const KEY = 'ECOMMERCE_CART_ITEMS';
+
 const DataContextProvider = (props) => {
 
     const [items, setItems] = useState([
@@ -11,11 +13,15 @@ const DataContextProvider = (props) => {
         {name:'Guitar',price: 300, qty: 1, id:3 },
     ])
 
-    // useEffect(() => {
-    //     localStorage.setItem('items',JSON.stringify(items))
-    // },[items])
+    useEffect(() => {
+        localStorage.setItem(KEY,JSON.stringify(items))
+    },[items])
 
-      
+    useEffect(() => {
+        const persistedItems = JSON.parse(localStorage.getItem(KEY));
+        if (persistedItems) setItems(persistedItems);
+    }, []);
+
     const addItems = (name,price,qty) => {
         setItems([...items,{name:name,price:price,qty:qty, id:uuid()}])
     }
@@ -29,8 +35,13 @@ const DataContextProvider = (props) => {
         )
     }
 
+    const actions = {
+        addItems,
+        removeItems,
+    }
+
     return(
-        <DataContext.Provider value={{items, addItems, removeItems}}>
+        <DataContext.Provider value={{items, actions}}>
             {props.children}
         </DataContext.Provider>
     )

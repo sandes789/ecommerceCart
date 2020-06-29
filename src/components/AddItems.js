@@ -2,13 +2,13 @@ import React, {useContext, useState} from 'react'
 import { DataContext } from '../context/DataContext'
 
 const AddItems = () => {
-    const {addItems} = useContext(DataContext)
+    const {actions} = useContext(DataContext)
     const [name, setName] = useState()
     const [price, setPrice] = useState()
     const [qty, setQty] = useState()
     const handlerSubmit = (e) => {
         e.preventDefault()
-        addItems(name,price,qty)
+        actions.addItems(name,price,qty)
         setName('')
         setPrice('')
         setQty('')

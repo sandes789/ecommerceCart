@@ -29,8 +29,13 @@ const DataContextProvider = (props) => {
         )
     }
 
+    const actions = {
+        addItems,
+        setItems,
+    }
+
     return(
-        <DataContext.Provider value={{items, addItems, removeItems}}>
+        <DataContext.Provider value={{items, actions}}>
             {props.children}
         </DataContext.Provider>
     )
